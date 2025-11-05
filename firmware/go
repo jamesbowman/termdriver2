@@ -1,0 +1,26 @@
+set -e
+
+ctags *.[chi] ../common/*.[chi]
+# make -C ../preproto
+mkdir -p build
+cd build
+cmake -DPICO_SDK_PATH=~/pico-sdk ..
+make -j4
+exit
+arm-none-eabi-objdump -h render.elf | grep flash_trailer
+arm-none-eabi-objdump --all render.elf | grep flash_binary_end
+
+../../scripts/picoload render.elf
+echo LOAD COMPLETE
+cd ..
+
+sleep 1
+while [ ! -e /dev/serial/by-id/usb-Excamera_td2_*-if00 ]
+do
+  sleep .1
+done
+sleep .5
+P=/dev/serial/by-id/usb-Excamera_td2_*-if00
+setserial $P low_latency
+# tt $P 115200
+# python sendbreak.py $P
