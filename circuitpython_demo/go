@@ -1,0 +1,11 @@
+set -e
+rm -rf image
+mkdir -p image
+
+mkdir image/lib
+cp -r adafruit_display_shapes image/lib/
+cp logo.bmp image/
+rsync -av adafruit_st7789.py image/
+rsync -av demo.py image/code.py
+rsync -rv --checksum image/ /media/jamesb/CIRCUITPY/
+sync
