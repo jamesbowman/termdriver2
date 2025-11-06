@@ -38,3 +38,11 @@ make -j
 ```
 
 The resulting `td2.uf2` and `td2.elf` binaries will appear in the build directory.
+
+To load `td2.uf2` on the TermDriver2 hardware, the easiest way is to reset the TermDriver to UF2 bootloader mode,
+as described in the [user Guide](https://termdriver.com/termdriver2.pdf).
+
+You can do this by hand, or 
+use the script in `demos/reset_to_uf2.py` that puts the TermDriver into UF2 bootloader mode, e.g.
+
+    python ../demos/reset_to_uf2.py COM4:
